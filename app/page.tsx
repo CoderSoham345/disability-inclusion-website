@@ -18,22 +18,22 @@ const features = [
     icon: Users,
     title: 'Athlete Empowerment',
     description: 'Connect with elite Paralympians and access world-class training programs across India',
-    color: 'from-purple-500 to-purple-600',
-    glow: 'purple',
+    color: 'from-cyan-500 to-blue-600',
+    glow: 'cyan',
   },
   {
     icon: Trophy,
     title: 'Competitive Excellence',
     description: 'Participate in competitions from local to international para-sports events',
-    color: 'from-cyan-500 to-blue-600',
-    glow: 'cyan',
+    color: 'from-blue-500 to-cyan-600',
+    glow: 'blue',
   },
   {
     icon: Zap,
     title: 'Community Strength',
     description: 'Join a thriving community of athletes, coaches, and disability sports advocates',
-    color: 'from-emerald-500 to-teal-600',
-    glow: 'emerald',
+    color: 'from-cyan-400 to-emerald-500',
+    glow: 'cyan',
   },
 ]
 
@@ -90,16 +90,17 @@ export default function Home() {
 
   return (
     <div className="relative overflow-hidden bg-slate-950">
-      {/* Animated background elements */}
+      {/* Animated background elements - Cyan/Blue dominant */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-cyan-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        <div className="absolute top-1/3 right-0 w-96 h-96 bg-blue-600/15 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
       </div>
 
-      {/* Mouse follow glow */}
+      {/* Mouse follow glow - Cyan focused */}
       <div
-        className="fixed pointer-events-none z-10 w-96 h-96 bg-gradient-to-r from-purple-500/30 to-cyan-500/30 rounded-full blur-3xl opacity-0 transition-opacity duration-300"
+        className="fixed pointer-events-none z-10 w-96 h-96 bg-gradient-to-r from-cyan-500/40 to-blue-500/40 rounded-full blur-3xl opacity-0 transition-opacity duration-300"
         style={{
           left: mousePosition.x - 192,
           top: mousePosition.y - 192,
