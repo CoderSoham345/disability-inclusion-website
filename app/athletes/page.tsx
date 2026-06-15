@@ -1,274 +1,168 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Search, Medal, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { ArrowRight, Medal, Trophy, Target } from 'lucide-react'
 
 const athletes = [
   {
-    id: '1',
-    name: 'Avani Lekhara',
-    sport: 'Shooting',
-    state: 'Madhya Pradesh',
-    medals: { gold: 2, silver: 1, bronze: 0 },
-    achievement: 'Youngest Paralympic gold medalist from India',
-    ambassadorPotential: 'Very High',
+    name: 'Deepa Malik',
+    sport: 'Shot Put',
+    medals: 5,
+    achievements: 'Paralympic Champion',
+    state: 'Maharashtra',
+    image: '🏅',
+  },
+  {
+    name: 'Devendra Jhajharia',
+    sport: 'Javelin Throw',
+    medals: 3,
+    achievements: 'World Record Holder',
+    state: 'Rajasthan',
     image: '🎯',
   },
   {
-    id: '2',
-    name: 'Sumit Antil',
-    sport: 'Javelin',
-    state: 'Haryana',
-    medals: { gold: 2, silver: 0, bronze: 0 },
-    achievement: '7x World Record holder',
-    ambassadorPotential: 'Very High',
-    image: '🎪',
-  },
-  {
-    id: '3',
-    name: 'Devendra Jhajharia',
-    sport: 'Javelin',
-    state: 'Rajasthan',
-    medals: { gold: 3, silver: 1, bronze: 0 },
-    achievement: 'Most decorated Indian Paralympian, PCI President',
-    ambassadorPotential: 'Very High',
-    image: '🎪',
-  },
-  {
-    id: '4',
     name: 'Mariyappan Thangavelu',
     sport: 'High Jump',
+    medals: 2,
+    achievements: 'Paralympic Gold',
     state: 'Tamil Nadu',
-    medals: { gold: 1, silver: 2, bronze: 0 },
-    achievement: 'Young para-athlete with massive social media following',
-    ambassadorPotential: 'Very High',
-    image: '⛹️',
+    image: '🏃',
   },
   {
-    id: '5',
-    name: 'Pramod Bhagat',
+    name: 'Sundar Singh Gurjar',
+    sport: 'Shot Put',
+    medals: 4,
+    achievements: 'Asian Champion',
+    state: 'Madhya Pradesh',
+    image: '💪',
+  },
+  {
+    name: 'Bhagyavati Sharma',
     sport: 'Badminton',
-    state: 'Odisha',
-    medals: { gold: 4, silver: 0, bronze: 1 },
-    achievement: 'Para-badminton pioneer and World Champion',
-    ambassadorPotential: 'Very High',
+    medals: 3,
+    achievements: 'Commonwealth Winner',
+    state: 'Delhi',
     image: '🏸',
   },
   {
-    id: '6',
-    name: 'Manasi Joshi',
-    sport: 'Badminton',
-    state: 'Telangana',
-    medals: { gold: 2, silver: 1, bronze: 1 },
-    achievement: 'Women\'s sports champion and role model',
-    ambassadorPotential: 'High',
-    image: '🏸',
+    name: 'Varun Singh Bhati',
+    sport: 'Wheelchair Racing',
+    medals: 4,
+    achievements: 'National Record',
+    state: 'Uttar Pradesh',
+    image: '🚴',
   },
 ]
 
-const sports = ['All Sports', 'Shooting', 'Javelin', 'High Jump', 'Badminton', 'Archery', 'Swimming']
-const potentials = ['All Athletes', 'Very High', 'High', 'Medium']
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+}
 
-export default function AthletesDirectory() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedSport, setSelectedSport] = useState('All Sports')
-  const [selectedPotential, setSelectedPotential] = useState('All Athletes')
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
 
-  const filtered = athletes.filter((athlete) => {
-    const matchesSearch = athlete.name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesSport = selectedSport === 'All Sports' || athlete.sport === selectedSport
-    const matchesPotential = selectedPotential === 'All Athletes' || athlete.ambassadorPotential === selectedPotential
-    return matchesSearch && matchesSport && matchesPotential
-  })
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  }
-
-  const totalMedals = athletes.reduce((acc, a) => acc + a.medals.gold + a.medals.silver + a.medals.bronze, 0)
-
+export default function AthletesPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="mx-auto max-w-7xl">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Elite Para-Athletes</h1>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Meet India&apos;s Paralympic champions and rising stars. Athletes breaking barriers and inspiring millions
-            </p>
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{athletes.length}+</div>
-                <div className="text-sm text-foreground/60">Athletes</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{totalMedals}+</div>
-                <div className="text-sm text-foreground/60">Medals</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">6</div>
-                <div className="text-sm text-foreground/60">Sports</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">10+</div>
-                <div className="text-sm text-foreground/60">States</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    <div className="relative overflow-hidden bg-slate-950 pt-20 pb-20">
+      {/* Animated background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute top-1/3 right-0 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+      </div>
 
-      {/* Search and Filter Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-background border-b border-border sticky top-16 z-40">
-        <div className="mx-auto max-w-7xl">
-          <div className="space-y-4">
-            {/* Search Bar */}
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-foreground/50" />
-              <input
-                type="text"
-                placeholder="Search athletes by name..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:border-primary"
-              />
-            </div>
+      <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <h1 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="text-gradient">Meet Our Champions</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            India&apos;s elite Paralympic athletes breaking barriers and inspiring millions
+          </p>
+        </motion.div>
 
-            {/* Sport Filter */}
-            <div>
-              <p className="text-sm font-medium mb-2">Sport</p>
-              <div className="flex flex-wrap gap-2">
-                {sports.map((sport) => (
-                  <button
-                    key={sport}
-                    onClick={() => setSelectedSport(sport)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedSport === sport ? 'bg-primary text-white' : 'bg-border hover:bg-primary/10'
-                    }`}
-                  >
-                    {sport}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Ambassador Potential Filter */}
-            <div>
-              <p className="text-sm font-medium mb-2">Ambassador Potential</p>
-              <div className="flex flex-wrap gap-2">
-                {potentials.map((potential) => (
-                  <button
-                    key={potential}
-                    onClick={() => setSelectedPotential(potential)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedPotential === potential ? 'bg-accent text-white' : 'bg-border hover:bg-accent/10'
-                    }`}
-                  >
-                    {potential}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <p className="text-sm text-foreground/60">Showing {filtered.length} athlete{filtered.length !== 1 ? 's' : ''}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Athletes Grid */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          {filtered.length > 0 ? (
+        {/* Athletes Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          {athletes.map((athlete, idx) => (
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
+              key={idx}
+              variants={itemVariants}
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="group"
             >
-              {filtered.map((athlete) => (
-                <motion.div
-                  key={athlete.id}
-                  variants={itemVariants}
-                  className="group rounded-xl border border-border bg-background hover:border-primary/50 hover:shadow-lg transition-all overflow-hidden"
-                >
-                  <div className="p-6 space-y-4">
-                    {/* Header with Avatar */}
-                    <div className="flex items-start justify-between">
-                      <div className="text-5xl mb-2">{athlete.image}</div>
-                      <div className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        athlete.ambassadorPotential === 'Very High'
-                          ? 'bg-success/10 text-success'
-                          : 'bg-primary/10 text-primary'
-                      }`}>
-                        {athlete.ambassadorPotential}
-                      </div>
-                    </div>
+              <div className="glass-effect p-6 rounded-3xl border border-purple-500/20 group-hover:border-purple-500/50 transition-all duration-300 h-full">
+                <div className="text-7xl mb-4 group-hover:scale-110 transition-transform duration-300">{athlete.image}</div>
+                
+                <h3 className="text-2xl font-bold text-white mb-2">{athlete.name}</h3>
+                <p className="text-cyan-400 font-semibold mb-1">{athlete.sport}</p>
+                <p className="text-slate-400 text-sm mb-4">{athlete.state}</p>
 
-                    {/* Name and Sport */}
-                    <div>
-                      <h3 className="text-xl font-bold">{athlete.name}</h3>
-                      <p className="text-sm text-foreground/60">{athlete.sport}</p>
-                      <p className="text-xs text-foreground/50 mt-1">📍 {athlete.state}</p>
-                    </div>
-
-                    {/* Achievement */}
-                    <p className="text-sm text-foreground/70 italic">&quot;{athlete.achievement}&quot;</p>
-
-                    {/* Medals */}
-                    <div className="flex items-center gap-6 pt-4 border-t border-border">
-                      {athlete.medals.gold > 0 && (
-                        <div className="flex items-center gap-2">
-                          <Medal className="h-4 w-4 text-yellow-500" />
-                          <span className="text-sm font-bold">{athlete.medals.gold} Gold</span>
-                        </div>
-                      )}
-                      {athlete.medals.silver > 0 && (
-                        <div className="flex items-center gap-2">
-                          <Medal className="h-4 w-4 text-gray-400" />
-                          <span className="text-sm font-bold">{athlete.medals.silver}</span>
-                        </div>
-                      )}
-                      {athlete.medals.bronze > 0 && (
-                        <div className="flex items-center gap-2">
-                          <Medal className="h-4 w-4 text-orange-600" />
-                          <span className="text-sm font-bold">{athlete.medals.bronze}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Button */}
-                    <Button className="w-full mt-4">View Profile</Button>
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Medal className="w-5 h-5 text-purple-400" />
+                    <span className="text-slate-300">{athlete.medals} Olympic Medals</span>
                   </div>
-                </motion.div>
-              ))}
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-amber-400" />
+                    <span className="text-slate-300">{athlete.achievements}</span>
+                  </div>
+                </div>
+
+                <Button size="sm" className="w-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:shadow-lg">
+                  View Profile
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
             </motion.div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-lg text-foreground/60">No athletes found matching your criteria</p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchTerm('')
-                  setSelectedSport('All Sports')
-                  setSelectedPotential('All Athletes')
-                }}
-                className="mt-4"
-              >
-                Clear Filters
+          ))}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center py-20 px-8 glass-effect rounded-3xl border border-purple-500/20"
+        >
+          <h2 className="text-4xl font-black mb-6">
+            <span className="text-gradient">Want to Support Our Athletes?</span>
+          </h2>
+          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+            Every contribution helps us develop the next generation of champions
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/partnerships">
+              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:shadow-xl">
+                Become a Sponsor
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </div>
-          )}
-        </div>
-      </section>
+            </Link>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-400">
+                Contact Us
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 }
