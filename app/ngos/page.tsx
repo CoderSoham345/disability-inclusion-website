@@ -1,233 +1,213 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Search, MapPin, Users, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { ArrowRight, Users, MapPin, Zap } from 'lucide-react'
 
-// Sample NGO data - in production, this would come from the database
 const ngos = [
   {
-    id: '1',
-    name: 'Samarthanam Trust for the Disabled',
+    id: 1,
+    name: 'Samarthanam Trust',
     state: 'Karnataka',
-    description: 'Leading NGO providing rehabilitation and adaptive sports programs',
-    sports: ['Basketball', 'Archery', 'Swimming'],
-    beneficiaries: 5000,
-    verified: true,
+    athletes: 500,
+    programs: 12,
+    icon: '🏋️',
+    description: 'Leading rehabilitation and adaptive sports',
   },
   {
-    id: '2',
-    name: 'Adventures Beyond Barriers Foundation',
-    state: 'National',
-    description: 'Outdoor recreation and adventure sports for athletes with disabilities',
-    sports: ['Rock Climbing', 'Skiing', 'Hiking'],
-    beneficiaries: 2000,
-    verified: true,
-  },
-  {
-    id: '3',
-    name: 'Wheelchair Basketball Federation of India',
-    state: 'Delhi',
-    description: 'Competitive wheelchair basketball development and training',
-    sports: ['Wheelchair Basketball'],
-    beneficiaries: 1500,
-    verified: true,
-  },
-  {
-    id: '4',
-    name: 'Pushpa Jaipuria Foundation',
-    state: 'Rajasthan',
-    description: 'Community outreach and youth development programs',
-    sports: ['Para Athletics', 'Badminton'],
-    beneficiaries: 3000,
-    verified: true,
-  },
-  {
-    id: '5',
-    name: 'SIVUS India',
+    id: 2,
+    name: 'Beyond Barriers',
     state: 'Maharashtra',
-    description: 'Inclusive sports and athlete development programs',
-    sports: ['Multiple Sports'],
-    beneficiaries: 4000,
-    verified: false,
+    athletes: 300,
+    programs: 8,
+    icon: '🧗',
+    description: 'Adventure sports and outdoor recreation',
   },
   {
-    id: '6',
-    name: 'Tamana',
+    id: 3,
+    name: 'Wheelchair Sports India',
     state: 'Delhi',
-    description: 'Disability inclusion through sports and community engagement',
-    sports: ['Cricket', 'Table Tennis', 'Badminton'],
-    beneficiaries: 2500,
-    verified: true,
+    athletes: 450,
+    programs: 15,
+    icon: '🚴',
+    description: 'Competitive wheelchair sports',
+  },
+  {
+    id: 4,
+    name: 'Para Badminton Academy',
+    state: 'Telangana',
+    athletes: 200,
+    programs: 6,
+    icon: '🏸',
+    description: 'Badminton coaching and training',
+  },
+  {
+    id: 5,
+    name: 'Swimming for All',
+    state: 'Tamil Nadu',
+    athletes: 350,
+    programs: 10,
+    icon: '🏊',
+    description: 'Swimming programs and rehabilitation',
+  },
+  {
+    id: 6,
+    name: 'Archery Excellence',
+    state: 'Rajasthan',
+    athletes: 150,
+    programs: 5,
+    icon: '🏹',
+    description: 'Competitive archery training',
   },
 ]
 
-const states = ['All States', 'National', 'Karnataka', 'Delhi', 'Rajasthan', 'Maharashtra', 'Tamil Nadu']
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+}
 
-export default function NGODirectory() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedState, setSelectedState] = useState('All States')
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
 
-  const filtered = ngos.filter((ngo) => {
-    const matchesSearch = ngo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ngo.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesState = selectedState === 'All States' || ngo.state === selectedState
-    return matchesSearch && matchesState
-  })
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  }
-
+export default function NGOsPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">NGO Directory</h1>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Discover organizations working to include athletes with disabilities through sports programs and community initiatives
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="relative overflow-hidden bg-slate-950 pt-20 pb-20">
+      {/* Animated background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute top-1/2 right-0 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+      </div>
 
-      {/* Search and Filter Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-background border-b border-border sticky top-16 z-40">
-        <div className="mx-auto max-w-7xl">
-          <div className="space-y-4">
-            {/* Search Bar */}
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-foreground/50" />
-              <input
-                type="text"
-                placeholder="Search organizations by name or keywords..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:border-primary"
-              />
-            </div>
+      <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <h1 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="text-gradient">Explore NGOs</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            Discover partner organizations making real impact across India&apos;s disability sports ecosystem
+          </p>
+        </motion.div>
 
-            {/* State Filter */}
-            <div className="flex flex-wrap gap-2">
-              {states.map((state) => (
-                <button
-                  key={state}
-                  onClick={() => setSelectedState(state)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    selectedState === state
-                      ? 'bg-primary text-white'
-                      : 'bg-border hover:bg-primary/10'
-                  }`}
-                >
-                  {state}
-                </button>
-              ))}
-            </div>
-
-            <p className="text-sm text-foreground/60">
-              Showing {filtered.length} organization{filtered.length !== 1 ? 's' : ''}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* NGO Grid */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          {filtered.length > 0 ? (
+        {/* NGOs Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          {ngos.map((ngo) => (
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
+              key={ngo.id}
+              variants={itemVariants}
+              whileHover={{ y: -15, scale: 1.02 }}
+              className="group"
             >
-              {filtered.map((ngo) => (
-                <motion.div
-                  key={ngo.id}
-                  variants={itemVariants}
-                  className="group rounded-xl border border-border bg-background hover:border-primary/50 hover:shadow-lg transition-all overflow-hidden"
-                >
-                  <div className="p-6 space-y-4">
-                    {/* Header */}
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold line-clamp-2">{ngo.name}</h3>
-                        <div className="flex items-center gap-1 mt-2 text-sm text-foreground/60">
-                          <MapPin className="h-4 w-4" />
-                          {ngo.state}
-                        </div>
-                      </div>
-                      {ngo.verified && (
-                        <div className="px-2 py-1 bg-success/10 text-success rounded text-xs font-medium">
-                          Verified
-                        </div>
-                      )}
+              <div className="glass-effect p-8 rounded-3xl border border-cyan-500/20 group-hover:border-cyan-500/50 group-hover:shadow-2xl group-hover:shadow-cyan-500/20 transition-all duration-500 h-full flex flex-col">
+                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">{ngo.icon}</div>
+                
+                <h3 className="text-2xl font-bold text-white mb-2">{ngo.name}</h3>
+                
+                <div className="flex items-center gap-2 mb-4">
+                  <MapPin className="w-4 h-4 text-emerald-400" />
+                  <p className="text-emerald-400 font-semibold">{ngo.state}</p>
+                </div>
+
+                <p className="text-slate-300 mb-6 flex-grow">{ngo.description}</p>
+
+                <div className="grid grid-cols-2 gap-4 mb-6 pt-6 border-t border-purple-500/20">
+                  <div>
+                    <div className="text-2xl font-black text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text">
+                      {ngo.athletes}+
                     </div>
-
-                    {/* Description */}
-                    <p className="text-sm text-foreground/70 line-clamp-2">{ngo.description}</p>
-
-                    {/* Sports */}
-                    <div className="flex flex-wrap gap-2">
-                      {ngo.sports.slice(0, 2).map((sport) => (
-                        <span
-                          key={sport}
-                          className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium"
-                        >
-                          {sport}
-                        </span>
-                      ))}
-                      {ngo.sports.length > 2 && (
-                        <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
-                          +{ngo.sports.length - 2} more
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Stats */}
-                    <div className="flex items-center gap-4 pt-4 border-t border-border">
-                      <div className="flex items-center gap-1 text-sm text-foreground/60">
-                        <Users className="h-4 w-4" />
-                        <span>{ngo.beneficiaries.toLocaleString()}+ beneficiaries</span>
-                      </div>
-                    </div>
-
-                    {/* Button */}
-                    <Button className="w-full mt-4">Learn More</Button>
+                    <p className="text-xs text-slate-400">Athletes</p>
                   </div>
-                </motion.div>
-              ))}
+                  <div>
+                    <div className="text-2xl font-black text-transparent bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text">
+                      {ngo.programs}
+                    </div>
+                    <p className="text-xs text-slate-400">Programs</p>
+                  </div>
+                </div>
+
+                <Button size="sm" className="w-full bg-gradient-to-r from-cyan-600 to-emerald-600 hover:shadow-lg">
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
             </motion.div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-lg text-foreground/60">No organizations found matching your criteria</p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchTerm('')
-                  setSelectedState('All States')
-                }}
-                className="mt-4"
-              >
-                Clear Filters
+          ))}
+        </motion.div>
+
+        {/* Statistics */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+        >
+          {[
+            { icon: '🌍', label: 'States Covered', value: '15+' },
+            { icon: '👥', label: 'Total Beneficiaries', value: '30K+' },
+            { icon: '⚡', label: 'Programs Delivered', value: '100+' },
+          ].map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.2 }}
+              className="glass-effect p-8 rounded-2xl text-center border border-purple-500/20"
+            >
+              <div className="text-5xl mb-4">{stat.icon}</div>
+              <div className="text-4xl font-black text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text mb-2">
+                {stat.value}
+              </div>
+              <p className="text-slate-400">{stat.label}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center py-20 px-8 glass-effect rounded-3xl border border-emerald-500/20"
+        >
+          <h2 className="text-4xl font-black mb-6">
+            <span className="text-gradient">Partner With Us</span>
+          </h2>
+          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+            Your NGO can make a difference. Join DisabilityWorks to reach more athletes and expand your impact
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/partnerships">
+              <Button size="lg" className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:shadow-xl">
+                Register Your NGO
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </div>
-          )}
-        </div>
-      </section>
+            </Link>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-400">
+                Get More Info
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 }

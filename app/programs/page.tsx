@@ -1,282 +1,254 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Calendar, MapPin, Users, TrendingUp, Search } from 'lucide-react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { ArrowRight, Zap, BarChart3, Users } from 'lucide-react'
 
 const programs = [
   {
-    id: '1',
-    name: 'Adaptive Swimming Excellence Program',
-    category: 'Adaptive Sports',
-    organization: 'Samarthanam Trust',
-    location: 'Bangalore, Karnataka',
-    startDate: '2024-07-01',
-    capacity: 30,
-    enrolled: 24,
-    fee: 5000,
-    description: 'Intensive swimming training for athletes with visual and mobility disabilities',
-    image: '🏊',
+    icon: '🏀',
+    title: 'Adaptive Sports',
+    description: 'Training programs tailored to all disability types with world-class coaching',
+    stats: { athletes: '2000+', locations: '25+' },
+    color: 'from-purple-500 to-purple-600',
+    glow: 'purple',
   },
   {
-    id: '2',
-    name: 'Competitive Badminton Development',
-    category: 'Competitive Sports',
-    organization: 'Pushpa Jaipuria Foundation',
-    location: 'Jaipur, Rajasthan',
-    startDate: '2024-06-15',
-    capacity: 25,
-    enrolled: 20,
-    fee: 3000,
-    description: 'Para-badminton training with national coaches',
-    image: '🏸',
+    icon: '🏊',
+    title: 'Rehabilitation Through Sports',
+    description: 'Evidence-based rehabilitation using sports as a therapeutic tool',
+    stats: { athletes: '1500+', locations: '20+' },
+    color: 'from-cyan-500 to-blue-600',
+    glow: 'cyan',
   },
   {
-    id: '3',
-    name: 'Outdoor Adventure Expedition',
-    category: 'Outdoor Recreation',
-    organization: 'Adventures Beyond Barriers',
-    location: 'Himachal Pradesh',
-    startDate: '2024-08-01',
-    capacity: 15,
-    enrolled: 12,
-    fee: 8000,
-    description: 'Rock climbing and trekking for experienced adventurers',
-    image: '⛰️',
+    icon: '🏕',
+    title: 'Outdoor Recreation',
+    description: 'Adventure activities and outdoor experiences for all abilities',
+    stats: { athletes: '1000+', locations: '15+' },
+    color: 'from-emerald-500 to-teal-600',
+    glow: 'emerald',
   },
   {
-    id: '4',
-    name: 'Community Sports Outreach',
-    category: 'Community Outreach',
-    organization: 'Tamana',
-    location: 'Delhi',
-    startDate: '2024-07-10',
-    capacity: 50,
-    enrolled: 38,
-    fee: 2000,
-    description: 'Cricket and athletics programs for all disability categories',
-    image: '🏏',
+    icon: '🧗',
+    title: 'Adventure Activities',
+    description: 'Extreme sports and challenging adventures that push boundaries',
+    stats: { athletes: '800+', locations: '10+' },
+    color: 'from-amber-500 to-orange-600',
+    glow: 'amber',
   },
   {
-    id: '5',
-    name: 'Wheelchair Basketball League',
-    category: 'Competitive Sports',
-    organization: 'WBFI',
-    location: 'Mumbai, Maharashtra',
-    startDate: '2024-09-01',
-    capacity: 40,
-    enrolled: 35,
-    fee: 6000,
-    description: 'National wheelchair basketball tournament preparation',
-    image: '🏀',
+    icon: '🏅',
+    title: 'Athlete Development',
+    description: 'Elite coaching and structured pathways to competitive sports excellence',
+    stats: { athletes: '500+', locations: '12+' },
+    color: 'from-pink-500 to-rose-600',
+    glow: 'pink',
   },
   {
-    id: '6',
-    name: 'Para Athletics Academy',
-    category: 'Athlete Development',
-    organization: 'ICRS',
-    location: 'Chennai, Tamil Nadu',
-    startDate: '2024-07-20',
-    capacity: 35,
-    enrolled: 28,
-    fee: 7000,
-    description: 'Professional track and field training program',
-    image: '🏃',
+    icon: '🤝',
+    title: 'Community Outreach',
+    description: 'Grassroots programs bringing sports access to underserved communities',
+    stats: { athletes: '5000+', locations: '30+' },
+    color: 'from-blue-500 to-indigo-600',
+    glow: 'blue',
   },
 ]
 
-const categories = ['All Programs', 'Adaptive Sports', 'Competitive Sports', 'Outdoor Recreation', 'Athlete Development', 'Community Outreach']
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+}
 
-export default function ProgramsDirectory() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('All Programs')
-  const [selectedProgram, setSelectedProgram] = useState<string | null>(null)
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
 
-  const filtered = programs.filter((program) => {
-    const matchesSearch = program.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      program.organization.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === 'All Programs' || program.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  }
-
+export default function ProgramsPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="mx-auto max-w-7xl">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Sports Programs</h1>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Explore and register for adaptive sports, competitive training, and community programs across India
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="relative overflow-hidden bg-slate-950 pt-20 pb-20">
+      {/* Animated background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 via-transparent to-cyan-600/5" />
+        <div className="absolute top-0 right-1/3 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+      </div>
 
-      {/* Search and Filter Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-background border-b border-border sticky top-16 z-40">
-        <div className="mx-auto max-w-7xl">
-          <div className="space-y-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-foreground/50" />
-              <input
-                type="text"
-                placeholder="Search programs or organizations..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:border-primary"
-              />
-            </div>
+      <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <h1 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="text-gradient">Our Programs</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            Comprehensive sports programs designed to empower athletes with disabilities at every level
+          </p>
+        </motion.div>
 
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    selectedCategory === category ? 'bg-primary text-white' : 'bg-border hover:bg-primary/10'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-
-            <p className="text-sm text-foreground/60">Found {filtered.length} program{filtered.length !== 1 ? 's' : ''}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Programs List */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          {filtered.length > 0 ? (
+        {/* Programs Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          {programs.map((program, idx) => (
             <motion.div
-              className="space-y-4"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
+              key={idx}
+              variants={itemVariants}
+              whileHover={{ y: -15, scale: 1.02 }}
+              className="group"
             >
-              {filtered.map((program) => {
-                const spotsLeft = program.capacity - program.enrolled
-                const isFull = spotsLeft === 0
-                const percentFull = (program.enrolled / program.capacity) * 100
+              <div className="glass-effect p-8 rounded-3xl border border-purple-500/20 group-hover:border-purple-500/50 group-hover:shadow-2xl group-hover:shadow-purple-500/20 transition-all duration-500 h-full flex flex-col">
+                <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${program.color} mb-6 group-hover:shadow-lg transition-all`}>
+                  <span className="text-4xl">{program.icon}</span>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-3">{program.title}</h3>
+                <p className="text-slate-300 mb-6 flex-grow leading-relaxed">{program.description}</p>
 
-                return (
-                  <motion.div
-                    key={program.id}
-                    variants={itemVariants}
-                    className="border border-border rounded-lg bg-background hover:border-primary/50 overflow-hidden transition-all"
-                  >
-                    <div className="p-6">
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Left: Program Info */}
-                        <div className="lg:col-span-2">
-                          <div className="flex items-start gap-4">
-                            <div className="text-4xl">{program.image}</div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h3 className="text-xl font-bold">{program.name}</h3>
-                                <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
-                                  {program.category}
-                                </span>
-                              </div>
-                              <p className="text-sm text-foreground/60 mb-4">{program.description}</p>
-                              <p className="text-sm font-medium mb-4">{program.organization}</p>
-
-                              <div className="flex flex-wrap gap-4 text-sm">
-                                <div className="flex items-center gap-2">
-                                  <Calendar className="h-4 w-4 text-foreground/50" />
-                                  {new Date(program.startDate).toLocaleDateString()}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <MapPin className="h-4 w-4 text-foreground/50" />
-                                  {program.location}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Users className="h-4 w-4 text-foreground/50" />
-                                  {program.enrolled}/{program.capacity} enrolled
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Right: Enrollment and Action */}
-                        <div className="lg:col-span-1">
-                          <div className="space-y-4">
-                            <div>
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">Enrollment</span>
-                                <span className="text-sm font-bold text-primary">{percentFull.toFixed(0)}%</span>
-                              </div>
-                              <div className="w-full bg-border rounded-full h-2">
-                                <div
-                                  className="bg-primary h-2 rounded-full transition-all"
-                                  style={{ width: `${percentFull}%` }}
-                                ></div>
-                              </div>
-                            </div>
-
-                            <div className="bg-background border border-border rounded-lg p-3">
-                              <p className="text-xs text-foreground/60 mb-1">Fee:</p>
-                              <p className="text-2xl font-bold text-primary">₹{program.fee.toLocaleString()}</p>
-                            </div>
-
-                            <div>
-                              {isFull ? (
-                                <Button disabled className="w-full">
-                                  Program Full
-                                </Button>
-                              ) : (
-                                <Button
-                                  className="w-full"
-                                  onClick={() => setSelectedProgram(program.id)}
-                                >
-                                  {spotsLeft} Spots Left - Register
-                                </Button>
-                              )}
-                            </div>
-
-                            <p className="text-xs text-foreground/50 text-center">
-                              {spotsLeft} spot{spotsLeft !== 1 ? 's' : ''} available
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                <div className="grid grid-cols-2 gap-4 mb-6 pt-6 border-t border-purple-500/20">
+                  <div>
+                    <div className="text-2xl font-black text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text">
+                      {program.stats.athletes}
                     </div>
-                  </motion.div>
-                )
-              })}
+                    <p className="text-xs text-slate-400">Athletes Served</p>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-transparent bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text">
+                      {program.stats.locations}
+                    </div>
+                    <p className="text-xs text-slate-400">Locations</p>
+                  </div>
+                </div>
+
+                <Button size="sm" className="w-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:shadow-lg">
+                  Explore Program
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
             </motion.div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-lg text-foreground/60">No programs found matching your criteria</p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchTerm('')
-                  setSelectedCategory('All Programs')
-                }}
-                className="mt-4"
+          ))}
+        </motion.div>
+
+        {/* Impact Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="py-20 px-8 glass-effect rounded-3xl border border-purple-500/20 mb-20"
+        >
+          <h2 className="text-4xl font-black text-center mb-12">
+            <span className="text-gradient">Program Impact</span>
+          </h2>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-4 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              { icon: '👥', label: 'Total Participants', value: '10,000+' },
+              { icon: '🏆', label: 'Competitions Won', value: '500+' },
+              { icon: '📚', label: 'Sessions Delivered', value: '5,000+' },
+              { icon: '🌍', label: 'States Reached', value: '25' },
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                className="text-center"
               >
-                Clear Filters
-              </Button>
+                <div className="text-5xl mb-4">{item.icon}</div>
+                <div className="text-3xl font-black text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text mb-2">
+                  {item.value}
+                </div>
+                <p className="text-slate-400">{item.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Featured Program */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mb-20 glass-effect p-10 rounded-3xl border border-cyan-500/30 overflow-hidden"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 className="text-4xl font-black mb-6">
+                <span className="text-gradient">Athlete Development Program</span>
+              </h3>
+              <p className="text-lg text-slate-300 mb-6">
+                Our flagship program identifies promising athletes and provides elite-level coaching, nutritional support, and mental health services to prepare them for international competition.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  'World-class coaching staff',
+                  'State-of-the-art facilities',
+                  'Personalized training plans',
+                  'Competition opportunities',
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-slate-300">
+                    <span className="w-2 h-2 bg-purple-400 rounded-full" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/contact">
+                <Button size="lg" className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:shadow-xl">
+                  Join Elite Program
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
-          )}
-        </div>
-      </section>
+            <div className="text-7xl text-center opacity-20 group-hover:opacity-30 transition-opacity">
+              🏅
+            </div>
+          </div>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center py-20 px-8 bg-gradient-to-r from-purple-600/20 via-cyan-600/20 to-blue-600/20 rounded-3xl border border-purple-500/20"
+        >
+          <h2 className="text-4xl font-black mb-6">
+            <span className="text-gradient">Find Your Perfect Program</span>
+          </h2>
+          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+            Whether you&apos;re just starting or aiming for the Paralympics, we have the right program for you
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/ngos">
+              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:shadow-xl">
+                Find Programs Near You
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-400">
+                Contact Our Team
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 }
