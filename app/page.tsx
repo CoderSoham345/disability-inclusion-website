@@ -1,411 +1,351 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { ArrowRight, Users, Trophy, Zap, Sparkles, Flame, Target, Heart } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
-
-const stats = [
-  { label: 'Active Athletes', value: '500+', icon: Trophy },
-  { label: 'Partner NGOs', value: '50+', icon: Users },
-  { label: 'States Covered', value: '15+', icon: Target },
-  { label: 'Lives Transformed', value: '30K+', icon: Heart },
-]
-
-const features = [
-  {
-    icon: Users,
-    title: 'Athlete Empowerment',
-    description: 'Connect with elite Paralympians and access world-class training programs across India',
-    color: 'from-cyan-500 to-blue-600',
-    glow: 'cyan',
-  },
-  {
-    icon: Trophy,
-    title: 'Competitive Excellence',
-    description: 'Participate in competitions from local to international para-sports events',
-    color: 'from-blue-500 to-cyan-600',
-    glow: 'blue',
-  },
-  {
-    icon: Zap,
-    title: 'Community Strength',
-    description: 'Join a thriving community of athletes, coaches, and disability sports advocates',
-    color: 'from-cyan-400 to-emerald-500',
-    glow: 'cyan',
-  },
-]
-
-const programs = [
-  { icon: '🏀', title: 'Adaptive Sports', description: 'Sports training for all disability types' },
-  { icon: '🏊', title: 'Rehabilitation', description: 'Sports-based rehabilitation programs' },
-  { icon: '🏕', title: 'Outdoor Recreation', description: 'Adventure in nature for all abilities' },
-  { icon: '🧗', title: 'Adventure Activities', description: 'Extreme sports and outdoor challenges' },
-  { icon: '🏅', title: 'Athlete Development', description: 'Elite training and coaching' },
-  { icon: '🤝', title: 'Community Programs', description: 'Grassroots sports initiatives' },
-]
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { ArrowRight, Play, Moon, Type, Accessibility } from 'lucide-react'
 
 export default function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+  const [accessibilityMode, setAccessibilityMode] = useState('normal')
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   }
 
-  const floatVariants = {
-    animate: {
-      y: [0, -20, 0],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      },
-    },
-  }
+  const statCards = [
+    { icon: '👥', number: '50+', label: 'NGOs', sublabel: 'Across India', color: 'from-purple-600 to-purple-400' },
+    { icon: '🏅', number: '30+', label: 'Paralympians', sublabel: 'Featured', color: 'from-blue-600 to-blue-400' },
+    { icon: '🤝', number: '20+', label: 'Partnerships', sublabel: 'Opportunities', color: 'from-green-600 to-green-400' },
+    { icon: '📋', number: '100+', label: 'Programs', sublabel: 'Running', color: 'from-orange-600 to-orange-400' },
+    { icon: '❤️', number: '1M+', label: 'Lives', sublabel: 'Impacted', color: 'from-pink-600 to-pink-400' },
+  ]
+
+  const aboutCards = [
+    { icon: '✨', title: 'Inclusion First', desc: 'We promote equal opportunities for everyone in sports.' },
+    { icon: '🎯', title: 'Empower Athletes', desc: 'We support athletes in achieving their dreams and breaking barriers.' },
+    { icon: '🤲', title: 'Stronger Together', desc: 'We collaborate with communities, NGOs, and partners for greater impact.' },
+  ]
 
   return (
-    <div className="relative overflow-hidden bg-slate-950">
-      {/* Animated background elements - Cyan/Blue dominant */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-cyan-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
-        <div className="absolute top-1/3 right-0 w-96 h-96 bg-blue-600/15 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+    <div className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-blue-950/20 to-slate-950">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
       </div>
 
-      {/* Mouse follow glow - Cyan focused */}
-      <div
-        className="fixed pointer-events-none z-10 w-96 h-96 bg-gradient-to-r from-cyan-500/40 to-blue-500/40 rounded-full blur-3xl opacity-0 transition-opacity duration-300"
-        style={{
-          left: mousePosition.x - 192,
-          top: mousePosition.y - 192,
-        }}
-      />
+      {/* Accessibility Toolbar */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 glass-effect p-4 rounded-2xl border border-purple-500/30"
+      >
+        <div className="flex flex-col gap-3">
+          <button
+            onClick={() => document.documentElement.classList.toggle('dark')}
+            className="p-3 rounded-lg hover:bg-purple-500/20 transition-all"
+            title="Toggle Dark/Light"
+          >
+            <Moon className="w-5 h-5 text-purple-300" />
+          </button>
+          <button
+            onClick={() => setAccessibilityMode(accessibilityMode === 'highContrast' ? 'normal' : 'highContrast')}
+            className="p-3 rounded-lg hover:bg-blue-500/20 transition-all"
+            title="Toggle High Contrast"
+          >
+            <Accessibility className="w-5 h-5 text-blue-300" />
+          </button>
+          <button
+            onClick={() => {
+              const root = document.documentElement
+              root.style.fontSize = root.style.fontSize === '18px' ? '16px' : '18px'
+            }}
+            className="p-3 rounded-lg hover:bg-cyan-500/20 transition-all"
+            title="Increase Text Size"
+          >
+            <Type className="w-5 h-5 text-cyan-300" />
+          </button>
+        </div>
+      </motion.div>
 
-      <div className="relative z-20">
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-          <div className="mx-auto max-w-7xl w-full">
+      {/* Hero Section */}
+      <div className="relative z-20 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
+        <div className="mx-auto max-w-7xl w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
             <motion.div
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
               initial="hidden"
               animate="visible"
               variants={containerVariants}
+              className="space-y-8"
             >
-              {/* Left Content */}
-              <motion.div variants={itemVariants} className="space-y-8">
-                <div className="space-y-4">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    className="inline-block"
-                  >
-                    <div className="px-4 py-2 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-500/30 rounded-full">
-                      <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text">
-                        🚀 National Impact Platform
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  <h1 className="text-5xl md:text-7xl font-black leading-tight">
-                    <span className="text-gradient">Empowering</span>
-                    <br />
-                    <span>Every</span>
-                    <br />
-                    <span className="text-gradient-gold">Ability</span>
-                  </h1>
-
-                  <p className="text-xl md:text-2xl text-slate-300 max-w-lg">
-                    Connecting Paralympians, NGOs, Communities, and Partners Across India Through Sports
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/athletes">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-purple-700 hover:shadow-xl hover:shadow-purple-500/50">
-                        <Trophy className="mr-2 h-5 w-5" />
-                        Meet Champions
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </motion.div>
-                  </Link>
-                  <Link href="/ngos">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button size="lg" variant="outline" className="w-full sm:w-auto border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
-                        <Users className="mr-2 h-5 w-5" />
-                        Explore NGOs
-                      </Button>
-                    </motion.div>
-                  </Link>
-                  <Link href="/programs">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button size="lg" variant="outline" className="w-full sm:w-auto border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10">
-                        <Zap className="mr-2 h-5 w-5" />
-                        View Programs
-                      </Button>
-                    </motion.div>
-                  </Link>
-                </div>
-
-                {/* Trust Badges */}
-                <div className="pt-4 flex flex-wrap gap-4 text-sm text-slate-400">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-purple-400" />
-                    <span>Verified Partners</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Flame className="w-4 h-4 text-orange-400" />
-                    <span>30K+ Lives Transformed</span>
-                  </div>
-                </div>
+              {/* Badge */}
+              <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-500/40 rounded-full">
+                <span className="text-purple-300 text-sm font-semibold">💜 BUILDING AN INCLUSIVE INDIA</span>
               </motion.div>
 
-              {/* Right Visual */}
-              <motion.div variants={itemVariants} className="relative h-96 md:h-full min-h-96 lg:min-h-[500px]">
-                <motion.div
-                  animate="animate"
-                  variants={floatVariants}
-                  className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-cyan-600/20 to-blue-600/20 rounded-3xl border border-purple-500/30 glass-effect neon-glow-lg flex items-center justify-center"
-                >
-                  <div className="text-center">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                      className="w-32 h-32 mx-auto mb-4"
-                    >
-                      <div className="w-full h-full bg-gradient-to-br from-purple-500 to-cyan-500 rounded-2xl flex items-center justify-center text-6xl">
-                        🏅
-                      </div>
-                    </motion.div>
-                    <p className="text-xl font-bold text-transparent bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text">
-                      India&apos;s Premier Platform
-                    </p>
-                  </div>
-                </motion.div>
+              {/* Headline */}
+              <motion.div variants={itemVariants} className="space-y-3">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+                  <span className="text-white">Empowering</span>{' '}
+                  <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                    Every Ability
+                  </span>{' '}
+                  <span className="text-transparent bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text italic">
+                    Through Sports
+                  </span>
+                </h1>
+              </motion.div>
 
-                {/* Floating Cards */}
-                {[
-                  { icon: '🎯', label: 'Precision', delay: 0 },
-                  { icon: '⚡', label: 'Impact', delay: 0.2 },
-                  { icon: '🌟', label: 'Excellence', delay: 0.4 },
-                ].map((card, i) => (
+              {/* Subheading */}
+              <motion.p variants={itemVariants} className="text-lg md:text-xl text-slate-300 max-w-md leading-relaxed">
+                Connecting NGOs, Paralympians, Communities, and Partners across India to create equal sporting opportunities for all.
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row gap-4 pt-4"
+              >
+                {/* Get Started Button */}
+                <Link href="/ngos" className="flex-1">
+                  <div className="group relative glass-effect p-6 rounded-2xl border border-purple-500/40 hover:border-purple-400/70 cursor-pointer overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(168,85,247,0.4)]">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative flex items-center justify-between">
+                      <div>
+                        <div className="text-xl font-bold text-white flex items-center gap-2">
+                          Get Started Now
+                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <p className="text-sm text-slate-400 mt-1">Explore our initiatives</p>
+                      </div>
+                      <div className="text-4xl">🚀</div>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Contact Button */}
+                <Link href="/contact" className="flex-1">
+                  <div className="group relative glass-effect p-6 rounded-2xl border border-cyan-500/40 hover:border-cyan-400/70 cursor-pointer overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]">
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/20 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative flex items-center justify-between">
+                      <div>
+                        <div className="text-xl font-bold text-white flex items-center gap-2">
+                          Contact Us
+                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <p className="text-sm text-slate-400 mt-1">We&apos;d love to hear from you</p>
+                      </div>
+                      <div className="text-4xl">💬</div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Visual - Sports Montage */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="relative h-96 md:h-full min-h-96 rounded-3xl overflow-hidden"
+            >
+              {/* Neon Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-blue-900/30 to-cyan-900/20 rounded-3xl" />
+              
+              {/* Glowing Circles */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute w-96 h-96 border-2 border-purple-500/30 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
+                <div className="absolute w-72 h-72 border-2 border-cyan-500/20 rounded-full animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }} />
+                <div className="absolute w-48 h-48 bg-gradient-to-br from-purple-500/20 to-blue-500/10 rounded-full blur-3xl" />
+              </div>
+
+              {/* Sports Athletes Emoji Grid */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="grid grid-cols-2 gap-8 text-8xl drop-shadow-[0_0_30px_rgba(168,85,247,0.6)]">
+                  <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 3, repeat: Infinity }} className="flex items-center justify-center">
+                    🏹
+                  </motion.div>
+                  <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 3, delay: 0.5, repeat: Infinity }} className="flex items-center justify-center">
+                    🚴
+                  </motion.div>
+                  <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 3, delay: 1, repeat: Infinity }} className="flex items-center justify-center">
+                    🏃
+                  </motion.div>
+                  <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 3, delay: 1.5, repeat: Infinity }} className="flex items-center justify-center">
+                    🏀
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Radial Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-transparent to-slate-950/60 rounded-3xl" />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="relative z-20 py-24 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {statCards.map((stat, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                whileHover={{ y: -10, scale: 1.05 }}
+                className="group relative"
+              >
+                <div className="glass-effect p-8 rounded-2xl border border-purple-500/30 hover:border-purple-400/60 transition-all cursor-pointer overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-2xl`} />
+                  
+                  <div className="relative z-10 text-center space-y-4">
+                    <div className="text-6xl">{stat.icon}</div>
+                    <div>
+                      <div className={`text-5xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                        {stat.number}
+                      </div>
+                      <div className="text-white font-bold mt-2">{stat.label}</div>
+                      <div className="text-sm text-slate-400">{stat.sublabel}</div>
+                    </div>
+                  </div>
+
+                  <div className={`absolute inset-0 bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-20 blur-xl rounded-2xl -z-10 transition-opacity`} />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* About Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="relative z-20 py-24 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left - Main Message */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="text-sm text-purple-300 font-semibold uppercase tracking-wide">ABOUT US</div>
+              <h2 className="text-5xl md:text-6xl font-black">
+                <span className="text-white">Building an</span>{' '}
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  Inclusive
+                </span>{' '}
+                <span className="text-white">and</span>{' '}
+                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Accessible India
+                </span>
+              </h2>
+              <p className="text-lg text-slate-300 leading-relaxed max-w-md">
+                We believe in a world where every individual, regardless of ability, has the opportunity to participate, compete, and excel through sports.
+              </p>
+            </motion.div>
+
+            {/* Right - Cards */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              {/* Three Icon Cards */}
+              <div className="grid grid-cols-1 gap-4 mb-8">
+                {aboutCards.map((card, idx) => (
                   <motion.div
-                    key={i}
-                    animate={{ y: [0, -30, 0], opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 3, delay: card.delay, repeat: Infinity }}
-                    className="absolute w-24 h-24 bg-slate-800/50 border border-purple-500/20 rounded-2xl flex items-center justify-center backdrop-blur"
-                    style={{
-                      left: `${(i + 1) * 25}%`,
-                      top: `${(i % 2) * 60}%`,
-                    }}
+                    key={idx}
+                    whileHover={{ x: 10 }}
+                    className="glass-effect p-6 rounded-2xl border border-purple-500/30 hover:border-purple-400/60 group cursor-pointer transition-all hover:shadow-[0_0_30px_rgba(168,85,247,0.3)]"
                   >
-                    <div className="text-center">
-                      <div className="text-3xl mb-1">{card.icon}</div>
-                      <p className="text-xs font-semibold text-slate-300">{card.label}</p>
+                    <div className="flex gap-4 items-start">
+                      <div className="text-4xl flex-shrink-0 group-hover:scale-110 transition-transform">{card.icon}</div>
+                      <div>
+                        <h3 className="text-white font-bold mb-1">{card.title}</h3>
+                        <p className="text-sm text-slate-400">{card.desc}</p>
+                        <Link href="/about" className="text-purple-400 text-sm font-semibold hover:text-purple-300 mt-2 inline-block">
+                          Learn More →
+                        </Link>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
+              </div>
+
+              {/* Video Card */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="glass-effect p-8 rounded-2xl border border-cyan-500/30 hover:border-cyan-400/60 overflow-hidden group cursor-pointer transition-all hover:shadow-[0_0_40px_rgba(34,211,238,0.3)]"
+              >
+                <div className="relative aspect-video bg-gradient-to-br from-cyan-600/30 to-blue-600/20 rounded-lg flex items-center justify-center overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/40 via-blue-900/30 to-purple-900/20" />
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative z-10 p-6 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all"
+                  >
+                    <Play className="w-8 h-8 text-white fill-white" />
+                  </motion.button>
+                  <div className="absolute top-4 right-4 text-white font-bold text-sm bg-black/40 px-3 py-1 rounded-full">
+                    Watch Our Impact
+                  </div>
+                </div>
               </motion.div>
             </motion.div>
           </div>
-        </section>
+        </div>
+      </motion.section>
 
-        {/* Stats Section */}
-        <section className="relative py-20 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={containerVariants}
-            >
-              {stats.map((stat, index) => {
-                const Icon = stat.icon
-                return (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    className="group relative"
-                    whileHover={{ y: -10 }}
-                  >
-                    <div className="glass-effect p-6 rounded-2xl text-center group-hover:border-purple-500/50 transition-all duration-300">
-                      <Icon className="w-8 h-8 mx-auto mb-3 text-purple-400 group-hover:text-cyan-400 transition-colors" />
-                      <div className="text-3xl md:text-4xl font-black text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text mb-2">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">{stat.label}</div>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="relative py-32 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={containerVariants}
-              className="text-center mb-20"
-            >
-              <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-                <span className="text-transparent bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text">
-                  Why DisabilityWorks?
-                </span>
-              </motion.h2>
-              <motion.p variants={itemVariants} className="text-xl text-slate-300 max-w-3xl mx-auto">
-                Creating India&apos;s most inclusive, athlete-focused platform for competitive and developmental sports
-              </motion.p>
-            </motion.div>
-
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={containerVariants}
-            >
-              {features.map((feature, index) => {
-                const Icon = feature.icon
-                return (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    whileHover={{ y: -15, scale: 1.02 }}
-                    className="group relative"
-                  >
-                    <div className="glass-effect p-8 rounded-3xl border border-purple-500/20 group-hover:border-purple-500/50 group-hover:shadow-2xl group-hover:shadow-purple-500/20 transition-all duration-500">
-                      <div className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${feature.color} mb-6 group-hover:shadow-lg transition-all`}>
-                        <Icon className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-300 group-hover:to-cyan-300 group-hover:bg-clip-text transition-all">
-                        {feature.title}
-                      </h3>
-                      <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Programs Section */}
-        <section className="relative py-32 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={containerVariants}
-              className="text-center mb-20"
-            >
-              <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-                <span className="text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text">
-                  Our Programs
-                </span>
-              </motion.h2>
-            </motion.div>
-
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-3 gap-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={containerVariants}
-            >
-              {programs.map((program, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05, rotate: 2 }}
-                  className="group"
-                >
-                  <div className="glass-effect p-6 rounded-2xl text-center group-hover:border-cyan-500/50 transition-all duration-300 cursor-pointer">
-                    <div className="text-4xl mb-3">{program.icon}</div>
-                    <h3 className="font-bold text-white mb-2">{program.title}</h3>
-                    <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">{program.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-cyan-600/20 to-blue-600/20 blur-3xl" />
-          <div className="relative mx-auto max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl md:text-6xl font-black mb-6">
-                <span className="text-transparent bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text">
-                  Ready to Join the Movement?
-                </span>
-              </h2>
-              <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
-                Be part of India&apos;s most powerful platform transforming disability sports
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link href="/contact">
-                    <Button size="lg" className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:shadow-xl hover:shadow-purple-500/50">
-                      Volunteer Today
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link href="/partnerships">
-                    <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
-                      Become a Partner
-                      <Sparkles className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      </div>
+      {/* CTA Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="relative z-20 py-24 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="mx-auto max-w-4xl">
+          <motion.div
+            variants={itemVariants}
+            className="glass-effect p-12 rounded-3xl border border-purple-500/40 text-center space-y-8"
+          >
+            <h2 className="text-4xl md:text-5xl font-black">
+              <span className="text-white">Ready to Make a</span>{' '}
+              <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                Difference?
+              </span>
+            </h2>
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+              Join us in our mission to empower every athlete with a disability. Whether you&apos;re an athlete, organization, or supporter, there&apos;s a place for you.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/sign-up">
+                <Button size="lg" className="bg-gradient-to-r from-purple-600 to-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]">
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/partnerships">
+                <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-300 hover:border-cyan-400">
+                  Become a Partner
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
     </div>
   )
 }
